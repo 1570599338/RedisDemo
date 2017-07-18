@@ -5,7 +5,7 @@ import java.util.List;
 import redis.clients.jedis.Jedis;
 
 /**
- * ²âÊÔredisµÄListÀàĞÍÊı¾İµÄ£Á£Ğ£É
+ * æµ‹è¯•redisçš„Listç±»å‹æ•°æ®çš„ï¼¡ï¼°ï¼©
  * @author lquan
  *
  */
@@ -15,13 +15,13 @@ public class TestList {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// Á´½Óredis
+		// é“¾æ¥redis
 		Jedis jedis = new Jedis("182.92.231.155", 6379);
-		// ÅĞ¶ÏÊÇ·ñÒÑ¾­Á´½Ó
+		// åˆ¤æ–­æ˜¯å¦å·²ç»é“¾æ¥
 			String pong =  jedis.ping();
 			System.out.println("**"+pong);
 			
-			// ²âÊÔlist ·½·¨
+			// æµ‹è¯•list æ–¹æ³•
 			testList(jedis);
 
 	}
@@ -29,24 +29,24 @@ public class TestList {
 	/**
 	 *  lpush/rpush/lrange
 	 *  lpop/rpop
-	 *  lindex£¬°´ÕÕË÷ÒıÏÂ±ê»ñµÃÔªËØ(´ÓÉÏµ½ÏÂ)
+	 *  lindexï¼ŒæŒ‰ç…§ç´¢å¼•ä¸‹æ ‡è·å¾—å…ƒç´ (ä»ä¸Šåˆ°ä¸‹)
 	 *  llen
-	 *  lrem key É¾N¸övalue
-	 *  ltrim key ¿ªÊ¼index ½áÊøindex£¬½ØÈ¡Ö¸¶¨·¶Î§µÄÖµºóÔÙ¸³Öµ¸økey
-	 *  rpoplpush Ô´ÁĞ±í Ä¿µÄÁĞ±í    *ÒÆ³ıÁĞ±íµÄ×îºóÒ»¸öÔªËØ£¬²¢½«¸ÃÔªËØÌí¼Óµ½ÁíÒ»¸öÁĞ±í²¢·µ»Ø
+	 *  lrem key åˆ Nä¸ªvalue
+	 *  ltrim key å¼€å§‹index ç»“æŸindexï¼Œæˆªå–æŒ‡å®šèŒƒå›´çš„å€¼åå†èµ‹å€¼ç»™key
+	 *  rpoplpush æºåˆ—è¡¨ ç›®çš„åˆ—è¡¨    *ç§»é™¤åˆ—è¡¨çš„æœ€åä¸€ä¸ªå…ƒç´ ï¼Œå¹¶å°†è¯¥å…ƒç´ æ·»åŠ åˆ°å¦ä¸€ä¸ªåˆ—è¡¨å¹¶è¿”å›
 	 *  lset key index value
-	 *  linsert key  before/after Öµ1 Öµ2  ÔÚlistÄ³¸öÒÑÓĞÖµµÄÇ°ºóÔÙÌí¼Ó¾ßÌåÖµ
+	 *  linsert key  before/after å€¼1 å€¼2  åœ¨listæŸä¸ªå·²æœ‰å€¼çš„å‰åå†æ·»åŠ å…·ä½“å€¼
 	 *   
 	 * @param redis
 	 */
 	private static  void testList(Jedis redis){
-		//  Ñ¡ÔñÊı¾İ¿â
+		//  é€‰æ‹©æ•°æ®åº“
 		redis.select(1);
 		
-		// lpush ·½·¨
+		// lpush æ–¹æ³•
 		redis.lpush("list1", new String[]{"list1.1","list1.2","list1.3","list1.4",} );
 		List<String> llist = redis.lrange("list1", 0, -1);
-		System.out.println("²é¿´×ópushÊı¾İ£º"+ llist);
+		System.out.println("æŸ¥çœ‹å·¦pushæ•°æ®ï¼š"+ llist);
 		
 		
 		

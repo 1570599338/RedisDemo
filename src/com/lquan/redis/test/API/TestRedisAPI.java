@@ -8,151 +8,151 @@ import redis.clients.jedis.Jedis;
 public class TestRedisAPI {
 	
 	public static void main(String[] args) throws Exception {
-		// Á´½Óredis
+		// é“¾æ¥redis
 		Jedis jedis = new Jedis("182.92.231.155", 6379);
-		// ÅĞ¶ÏÊÇ·ñÒÑ¾­Á´½Ó
+		// åˆ¤æ–­æ˜¯å¦å·²ç»é“¾æ¥
 			String pong =  jedis.ping();
 			System.out.println("**"+pong);
 		
-		// ²âÊÔkey Ïà¹ØµÄ³ÌĞò
+		// æµ‹è¯•key ç›¸å…³çš„ç¨‹åº
 		//testKey( jedis);
 			
-		//²âÊÔ²Ù×÷String ÀàĞÍµÄÊı¾İ
+		//æµ‹è¯•æ“ä½œString ç±»å‹çš„æ•°æ®
 		//	testString(jedis);
 		
 	}
 	
-	// ²âÊÔStringÀàĞÍÊı¾İµÄ·½·¨
+	// æµ‹è¯•Stringç±»å‹æ•°æ®çš„æ–¹æ³•
 	/**
 	 * 
 	 * set/get/del/append/strlen
-	 *Incr/decr/incrby/decrby,Ò»¶¨ÒªÊÇÊı×Ö²ÅÄÜ½øĞĞ¼Ó¼õ
+	 *Incr/decr/incrby/decrby,ä¸€å®šè¦æ˜¯æ•°å­—æ‰èƒ½è¿›è¡ŒåŠ å‡
 	 *getrange/setrange
-	 *setex(set with expire)¼üÃëÖµ/setnx(set if not exist)
+	 *setex(set with expire)é”®ç§’å€¼/setnx(set if not exist)
 	 *mset/mget/msetnx
-	 * getset(ÏÈgetÔÙset)
+	 * getset(å…ˆgetå†set)
 	 * @param jedis
 	 * @throws Exception
 	 */
 	public static void testString(Jedis redis) throws Exception {
-		// ÉèÖÃÔªËØ  -c ´Î·½·¨·µ»ØµÄÊÇ×´Ì¬£Ï£Ë
-		String a = redis.set("setStringkey1", "stringkey1£±");
+		// è®¾ç½®å…ƒç´   -c æ¬¡æ–¹æ³•è¿”å›çš„æ˜¯çŠ¶æ€ï¼¯ï¼«
+		String a = redis.set("setStringkey1", "stringkey1ï¼‘");
 		System.out.println(a);
 		
-		// »ñÈ¡¶ÔÓ¦µÄkey
+		// è·å–å¯¹åº”çš„key
 		String getStringKey = redis.get("setStringkey1");
-		System.out.println("»ñÈ¡¶ÔÓ¦µÄkey: "+getStringKey);
+		System.out.println("è·å–å¯¹åº”çš„key: "+getStringKey);
 		
-		// É¾³ıÊı¾İ
+		// åˆ é™¤æ•°æ®
 		//redis.del("setStringkey1");
-		System.out.println("É¾³ıÊı¾İ²éÑ¯¶ÔÓ¦µÄÖµ£º: "+ redis.get("setStringkey1"));
+		System.out.println("åˆ é™¤æ•°æ®æŸ¥è¯¢å¯¹åº”çš„å€¼ï¼š: "+ redis.get("setStringkey1"));
 		
-		// Æ´½Ó
+		// æ‹¼æ¥
 		redis.set("setStringkey2", "Stringkey2");
-		System.out.println("Æ´½ÓÇ°¶ÔÓ¦µÄÖµ£º "+ redis.get("setStringkey2"));
+		System.out.println("æ‹¼æ¥å‰å¯¹åº”çš„å€¼ï¼š "+ redis.get("setStringkey2"));
 		redis.append("setStringkey2", "xxxx");
-		System.out.println("Æ´½Óºó¶ÔÓ¦µÄÖµ£º "+ redis.get("setStringkey2"));
+		System.out.println("æ‹¼æ¥åå¯¹åº”çš„å€¼ï¼š "+ redis.get("setStringkey2"));
 		
-		// »ñÈ¡×Ö·û´®µÄ³¤¶È
+		// è·å–å­—ç¬¦ä¸²çš„é•¿åº¦
 		Long l = redis.strlen("setStringkey2");
-		System.out.println("»ñÈ¡×Ö·û´®µÄ³¤¶È:"+l);
+		System.out.println("è·å–å­—ç¬¦ä¸²çš„é•¿åº¦:"+l);
 		
-		// incr ·½·¨µ¥²½µİÔö
+		// incr æ–¹æ³•å•æ­¥é€’å¢
 		redis.set("countincr","0");
 		long count = redis.incr("countincr");
-		System.out.println("incr ·½·¨µ¥²½µİÔö"+count);
+		System.out.println("incr æ–¹æ³•å•æ­¥é€’å¢"+count);
 		
-		// decr µ¥²½µİ¼õ
+		// decr å•æ­¥é€’å‡
 		long decrcount = redis.decr("countincr");
-		System.out.println("decrcount ·½·¨µ¥²½µİ¼õ£º"+decrcount);
+		System.out.println("decrcount æ–¹æ³•å•æ­¥é€’å‡ï¼š"+decrcount);
 		
-		// incrby Ö¸¶¨Ôö¼Ó
+		// incrby æŒ‡å®šå¢åŠ 
 		Long incrBycount = redis.incrBy("countincr", 5);
-		System.out.println("ncrby Ö¸¶¨Ôö¼Ó£º"+incrBycount);
+		System.out.println("ncrby æŒ‡å®šå¢åŠ ï¼š"+incrBycount);
 		
-		//decrby Ö¸¶¨½ÏÉÙ
+		//decrby æŒ‡å®šè¾ƒå°‘
 		Long decrBycount = redis.decrBy("countincr", 2);
-		System.out.println("decrby Ö¸¶¨½ÏÉÙ£º"+decrBycount);
+		System.out.println("decrby æŒ‡å®šè¾ƒå°‘ï¼š"+decrBycount);
 		
 		redis.set("getrange", "getrangexyz123");
-		// getrange ·½·¨
+		// getrange æ–¹æ³•
 		String getrange = redis.getrange("getrange", 2, 3); 
-		System.out.println("getrange ·½·¨"+getrange);
+		System.out.println("getrange æ–¹æ³•"+getrange);
 		
-		// setrang Ö¸¶¨µÄÎ»ÖÃ±»Ìæ»»µô
+		// setrang æŒ‡å®šçš„ä½ç½®è¢«æ›¿æ¢æ‰
 		Long setrang = redis.setrange("getrange", 8, "lquan");
-		System.out.println("Ö¸¶¨µÄÎ»ÖÃ±»Ìæ»»µô"+ redis.getrange("getrange", 0, -1) );
+		System.out.println("æŒ‡å®šçš„ä½ç½®è¢«æ›¿æ¢æ‰"+ redis.getrange("getrange", 0, -1) );
 		
-		//  setex ÉèÖÃÓĞĞ§Ê±¼ä
-		redis.setex("getrange", 15, "ÉèÖÃÊ±¼äÎª15s");
-		System.out.println("²é¿´getrangeµÄÓĞĞ§Ê±³¤:"+ redis.ttl("getrange") +"   key£º"+redis.get("getrange") );
+		//  setex è®¾ç½®æœ‰æ•ˆæ—¶é—´
+		redis.setex("getrange", 15, "è®¾ç½®æ—¶é—´ä¸º15s");
+		System.out.println("æŸ¥çœ‹getrangeçš„æœ‰æ•ˆæ—¶é•¿:"+ redis.ttl("getrange") +"   keyï¼š"+redis.get("getrange") );
 	//	Thread.sleep(10000);
-		System.out.println("10Ãëºó²é¿´getrangeµÄÓĞĞ§Ê±³¤:"+ redis.ttl("getrange") +"   key£º"+redis.get("getrange") );
+		System.out.println("10ç§’åæŸ¥çœ‹getrangeçš„æœ‰æ•ˆæ—¶é•¿:"+ redis.ttl("getrange") +"   keyï¼š"+redis.get("getrange") );
 	//	Thread.sleep(6000);
-		System.out.println("16Ãëºó²é¿´getrangeµÄÓĞĞ§Ê±³¤:"+ redis.ttl("getrange") +"   key£º"+redis.get("getrange") );
+		System.out.println("16ç§’åæŸ¥çœ‹getrangeçš„æœ‰æ•ˆæ—¶é•¿:"+ redis.ttl("getrange") +"   keyï¼š"+redis.get("getrange") );
 	
-		// setnx ·½·¨£¬Ö»ÓĞÔÚ¶ÔÓ¦µÄkeyÖµ²»´æÔÚµÄÇé¿öÏÂ²ÅÄÜÌí¼Ó½øÈë
+		// setnx æ–¹æ³•ï¼Œåªæœ‰åœ¨å¯¹åº”çš„keyå€¼ä¸å­˜åœ¨çš„æƒ…å†µä¸‹æ‰èƒ½æ·»åŠ è¿›å…¥
 		redis.set("getrangexx", "getrangexx");
 		Long aa = redis.setnx("getrangexx", "xxxxx");
-		System.out.println("×´Ì¬£º"+aa+"²éÑ¯Öµ"+redis.get("getrangexx"));
-		System.out.println("²»´æÔÚÇ°"+redis.get("getrangexxlquan"));
+		System.out.println("çŠ¶æ€ï¼š"+aa+"æŸ¥è¯¢å€¼"+redis.get("getrangexx"));
+		System.out.println("ä¸å­˜åœ¨å‰"+redis.get("getrangexxlquan"));
 		Long aaa = redis.setnx("getrangexxlquan", "getrangexxlquan");
-		System.out.println("×´Ì¬£º"+aaa+"²éÑ¯Öµ"+redis.get("getrangexxlquan"));
+		System.out.println("çŠ¶æ€ï¼š"+aaa+"æŸ¥è¯¢å€¼"+redis.get("getrangexxlquan"));
 		
-		 // ¶àÖµÉèÖÃ
+		 // å¤šå€¼è®¾ç½®
 		redis.mset(new String[]{"kx1","vx1","kx2","vx2"});
 		
-		//»ñÈ¡¶àÖµ
+		//è·å–å¤šå€¼
 		List<String> mgetList = redis.mget(new String[]{"kx1","kx2"});
 		System.out.println(mgetList);
 		
-		// ÉèÖÃ
+		// è®¾ç½®
 		redis.msetnx(new String[]{"kx1","vx3","kx2","vx4"});
-		System.out.println("´æÔÚÇé¿öÏÂÖµ£º"+redis.mget(new String[]{"kx1","kx2"}));
+		System.out.println("å­˜åœ¨æƒ…å†µä¸‹å€¼ï¼š"+redis.mget(new String[]{"kx1","kx2"}));
 		redis.msetnx(new String[]{"kxy1","vx3","kxy2","vx4"});
-		System.out.println("²»´æÔÚÇé¿öÏÂÖµ£º"+redis.mget(new String[]{"kxy1","kxy2"}));
+		System.out.println("ä¸å­˜åœ¨æƒ…å†µä¸‹å€¼ï¼š"+redis.mget(new String[]{"kxy1","kxy2"}));
 		
-		// getset·½·¨ Ö÷ÒªÊÇÔÚsetÇ°»ñÈ¡Ö®Ç°µÄÖµ£¬ÎŞÂÛkey´æÔÚÓë·ñ
-		System.out.println(" getset·½·¨Öµ£º"+redis.getSet("kxyx1","kxy2"));
-		System.out.println(" getset·½·¨Öµ£º"+redis.getSet("kxyx1","kxy2"));
+		// getsetæ–¹æ³• ä¸»è¦æ˜¯åœ¨setå‰è·å–ä¹‹å‰çš„å€¼ï¼Œæ— è®ºkeyå­˜åœ¨ä¸å¦
+		System.out.println(" getsetæ–¹æ³•å€¼ï¼š"+redis.getSet("kxyx1","kxy2"));
+		System.out.println(" getsetæ–¹æ³•å€¼ï¼š"+redis.getSet("kxyx1","kxy2"));
 		
 		
 		/**
 		 * set/get/del/append/strlen
-		 *Incr/decr/incrby/decrby,Ò»¶¨ÒªÊÇÊı×Ö²ÅÄÜ½øĞĞ¼Ó¼õ
+		 *Incr/decr/incrby/decrby,ä¸€å®šè¦æ˜¯æ•°å­—æ‰èƒ½è¿›è¡ŒåŠ å‡
 		 *getrange/setrange
-		 *setex(set with expire)¼üÃëÖµ/setnx(set if not exist)
+		 *setex(set with expire)é”®ç§’å€¼/setnx(set if not exist)
 		 *mset/mget/msetnx
-		 * getset(ÏÈgetÔÙset)
+		 * getset(å…ˆgetå†set)
 		 */
 		
 	}
 	
-	// ²âÊÔkeyÏà¹ØµÄ³ÌĞò
+	// æµ‹è¯•keyç›¸å…³çš„ç¨‹åº
 	public static void testKey(Jedis jedis) throws Exception {
-		// »ñµÃËùÓĞµÄkey keys *
+		// è·å¾—æ‰€æœ‰çš„key keys *
 				Set<String> keys  = jedis.keys("*");
 				for(String key:keys){
 					System.out.println("key:"+key+" <->value:"+jedis.get(key));
 				}
-		// exists key ·½·¨	
+		// exists key æ–¹æ³•	
 				if(jedis.exists("k3")){
-						System.out.println("´æÔÚk3");
+						System.out.println("å­˜åœ¨k3");
 				}else{
-						System.out.println("²»´æÔÚk3");
+						System.out.println("ä¸å­˜åœ¨k3");
 				}
-		// move key db ÒÆ¶¯Ö¸¶¨µÄkeyµ½dbÖĞ
+		// move key db ç§»åŠ¨æŒ‡å®šçš„keyåˆ°dbä¸­
 			jedis.move("k1", 1);
 				
-		// expire key time ¸øÖ¸¶¨µÄkeyÉèÖÃÊ±¼ä ºÍttl keyµÄÓĞĞ§Ê±³¤
-			System.out.println("Ö´ĞĞÇ°£º"+jedis.ttl("k3") +"»ñÈ¡µ±Ç°µÄvalue   "+jedis.get("k3"));
-			jedis.expire("k3",10 );//Éè¶¨10Ãë
-			Thread.sleep(1000*5); //Éè¶¨5ÃëË¯Ãß
-			System.out.println("Ö´ĞĞÖĞ£º"+jedis.ttl("k3") +"»ñÈ¡µ±Ç°µÄvalue   "+jedis.get("k3"));
-			Thread.sleep(1000*7); //Éè¶¨5ÃëË¯Ãß	
-			System.out.println("¹ıÆÚºó£º"+jedis.ttl("k3") +"»ñÈ¡µ±Ç°µÄvalue   "+jedis.get("k3"));
+		// expire key time ç»™æŒ‡å®šçš„keyè®¾ç½®æ—¶é—´ å’Œttl keyçš„æœ‰æ•ˆæ—¶é•¿
+			System.out.println("æ‰§è¡Œå‰ï¼š"+jedis.ttl("k3") +"è·å–å½“å‰çš„value   "+jedis.get("k3"));
+			jedis.expire("k3",10 );//è®¾å®š10ç§’
+			Thread.sleep(1000*5); //è®¾å®š5ç§’ç¡çœ 
+			System.out.println("æ‰§è¡Œä¸­ï¼š"+jedis.ttl("k3") +"è·å–å½“å‰çš„value   "+jedis.get("k3"));
+			Thread.sleep(1000*7); //è®¾å®š5ç§’ç¡çœ 	
+			System.out.println("è¿‡æœŸåï¼š"+jedis.ttl("k3") +"è·å–å½“å‰çš„value   "+jedis.get("k3"));
 			
-			// »ñÈ¡keyµÄÀàĞÍ
+			// è·å–keyçš„ç±»å‹
 			System.out.println(jedis.type("k2"));
 	}
 	
