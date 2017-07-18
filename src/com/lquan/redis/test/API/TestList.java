@@ -21,7 +21,7 @@ public class TestList {
 			String pong =  jedis.ping();
 			System.out.println("**"+pong);
 			
-			// 测试list 方法
+			// 测试list 方法 在redis中list类型的数据就是一个双链表
 			testList(jedis);
 
 	}
@@ -44,12 +44,14 @@ public class TestList {
 		redis.select(1);
 		
 		// lpush 方法
-		redis.lpush("list1", new String[]{"list1.1","list1.2","list1.3","list1.4",} );
+		redis.lpush("list1", new String[]{"list1.1。1","list1.2.2","list1.3.3","list1.4.4",} );
 		List<String> llist = redis.lrange("list1", 0, -1);
 		System.out.println("查看左push数据："+ llist);
 		
-		
-		
+		// rpush 方法 有链接的list
+		redis.rpush("rlist", new String[]{"rlist1.1a","rlist1.2a","rlist1.3a","rlist1.4a",} );
+		List<String> rlist = redis.lrange("rlist", 0, -1);
+		System.out.println("查看右push数据："+ rlist);
 		
 		 // lpush/rpush/lrange
 		
