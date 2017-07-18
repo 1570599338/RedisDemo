@@ -18,7 +18,7 @@ public class TestRedisAPI {
 		//testKey( jedis);
 			
 		//测试操作String 类型的数据
-			testString(jedis);
+		//	testString(jedis);
 		
 	}
 	
