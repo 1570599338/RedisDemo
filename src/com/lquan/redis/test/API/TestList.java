@@ -18,11 +18,10 @@ public class TestList {
 		// 链接redis
 		Jedis jedis = new Jedis("182.92.231.155", 6379);
 		// 判断是否已经链接
-			String pong =  jedis.ping();
-			System.out.println("**"+pong);
-			
-			// 测试list 方法 在redis中list类型的数据就是一个双链表
-			testList(jedis);
+		String pong =  jedis.ping();
+		System.out.println("**"+pong);
+		// 测试list 方法 在redis中list类型的数据就是一个双链表
+		testList(jedis);
 
 	}
 	
@@ -56,6 +55,10 @@ public class TestList {
 		 // lpush/rpush/lrange
 		
 		
+		//  删除第一个元素
+		String  lpops = redis.lpop("list1");
+		System.out.println(lpops+"****"+redis.rpop("list1"));
+		//  lpop/rpop  出列
 	}
 
 }
