@@ -59,6 +59,10 @@ public class TestList {
 		String  lpops = redis.lpop("list1");
 		System.out.println(lpops+"****"+redis.rpop("list1"));
 		//  lpop/rpop  出列
+		
+		String xx = redis.lindex("list1", 2);
+		System.out.println(xx);
+		//  lindex，按照索引下标获得元素(从上到下)
 	}
 
 }
