@@ -2,6 +2,7 @@ package com.lquan.redis.test.API;
 
 import java.util.List;
 
+
 import redis.clients.jedis.Jedis;
 
 /**
@@ -63,6 +64,22 @@ public class TestList {
 		String xx = redis.lindex("list1", 2);
 		System.out.println(xx);
 		//  lindex，按照索引下标获得元素(从上到下)
+		Long  llenstr = redis.llen("list1");
+		System.out.println(redis.lrange("list1", 0, -1)+"****"+llenstr);
+		//  llen
+		
+		Long aa = redis.lrem("list1", 1, "list1.1。1");//指定删除多个value
+		System.out.println(redis.lrange("list1", 0, -1)+"****"+aa);
+		//redis.lpush("ltrimlist", new String[]{"x"});
+		//redis.lpush("list1", new String[]{"list1.1。1","list1.2.2","list1.3.3","list1.4.4",} );
+		/**
+	*  lrem key 删N个value
+	 *  ltrim key 开始index 结束index，截取指定范围的值后再赋值给key
+	 *  rpoplpush 源列表 目的列表    *移除列表的最后一个元素，并将该元素添加到另一个列表并返回
+	 *  lset key index value
+	 *  linsert key  before/after 值1 值2  在list某个已有值的前后再添加具体值
+		
+		**/
 	}
 
 }

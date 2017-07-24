@@ -81,7 +81,7 @@ public class TestRedisAPI {
 		
 		// setrang 指定的位置被替换掉
 		Long setrang = redis.setrange("getrange", 8, "lquan");
-		System.out.println("指定的位置被替换掉"+ redis.getrange("getrange", 0, -1) );
+		System.out.println(setrang+"指定的位置被替换掉"+ redis.getrange("getrange", 0, -1) );
 		
 		//  setex 设置有效时间
 		redis.setex("getrange", 15, "设置时间为15s");
