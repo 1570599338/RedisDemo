@@ -3,6 +3,7 @@ package com.lquan.redis.test.API;
 import java.util.List;
 
 
+import redis.clients.jedis.BinaryClient.LIST_POSITION;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -69,9 +70,48 @@ public class TestList {
 		//  llen
 		
 		Long aa = redis.lrem("list1", 1, "list1.1。1");//指定删除多个value
-		System.out.println(redis.lrange("list1", 0, -1)+"****"+aa);
+		
 		//redis.lpush("ltrimlist", new String[]{"x"});
 		//redis.lpush("list1", new String[]{"list1.1。1","list1.2.2","list1.3.3","list1.4.4",} );
+		// *  ltrim key 开始index 结束index，截取指定范围的值后再赋值给key
+		redis.del("rlista");
+		redis.lpush("rlista", new String[]{"a","b","b","c","c","c","d"} );
+		System.out.println("删除前："+redis.lrange("rlista", 0, -1));
+		redis.ltrim("rlista", 1, 6);
+		System.out.println("删除后："+redis.lrange("rlista", 0, -1));
+		
+		
+		//lrem key 删N个value
+		redis.del("rlistb");
+		redis.lpush("rlistb", new String[]{"a","b","b","c","c","c","d"} );
+		System.out.println("删除前："+redis.lrange("rlistb", 0, -1));
+		redis.lrem("rlistb", 2, "b");
+		System.out.println("删除后："+redis.lrange("rlistb", 0, -1));
+		
+		
+		// rpoplpush 源列表 目的列表    *移除列表的最后一个元素，并将该元素添加到另一个列表并返回
+		redis.del("rlistc");
+		redis.lpush("rlistc", new String[]{"a","b","c","d","e","f"} );
+		redis.del("rlistd");
+		redis.lpush("rlistd", new String[]{"1","2","3","4","5","6"} );
+		redis.rpoplpush("rlistc", "rlistd");
+		System.out.println("rpoplpush："+redis.lrange("rlistd", 0, -1));
+		
+		
+		//  lset key index value 修改指定位置的值
+		redis.del("rliste");
+		redis.lpush("rliste", new String[]{"1","2","3","4","5","6"} );
+		redis.lset("rliste", 1, "xx");
+		System.out.println("rliste："+redis.lrange("rliste", 0, -1));
+		
+		
+		// linsert key  before/after 值1 值2  在list某个已有值的前后再添加具体值
+		redis.del("linsertx");
+		redis.lpush("linsertx", new String[]{"a","b","c"} );
+		redis.linsert("linsertx", LIST_POSITION.BEFORE, "b", "java");
+		System.out.println("linsertx："+redis.lrange("linsertx", 0, -1));
+		redis.linsert("linsertx", LIST_POSITION.AFTER, "b", "mysqls");
+		System.out.println("linsertx："+redis.lrange("linsertx", 0, -1));
 		/**
 	*  lrem key 删N个value
 	 *  ltrim key 开始index 结束index，截取指定范围的值后再赋值给key
