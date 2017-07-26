@@ -3,16 +3,16 @@ package com.lquan.redis.test.API;
 import redis.clients.jedis.Jedis;
 
 /**
- * ²âÊÔSetÀàĞÍÊı¾İ
+ * æµ‹è¯•Setç±»å‹æ•°æ®
  * @author lquan
  *
  */
 public class TestSet {
 	
 	public static void main(String[] args) {
-		// Á´½Óredis
+		// é“¾æ¥redis
 		Jedis jedis = new Jedis("182.92.231.155", 6379);
-		// ÅĞ¶ÏÊÇ·ñÒÑ¾­Á´½Ó
+		// åˆ¤æ–­æ˜¯å¦å·²ç»é“¾æ¥
 		String pong =  jedis.ping();
 		System.out.println("** "+pong);
 		getSet(jedis);
@@ -20,41 +20,41 @@ public class TestSet {
 	
 	/**
 	 *  sadd/smembers/sismember
-		 scard£¬»ñÈ¡¼¯ºÏÀïÃæµÄÔªËØ¸öÊı
-		 srem key value É¾³ı¼¯ºÏÖĞÔªËØ
-		 srandmember key Ä³¸öÕûÊı(Ëæ»ú³ö¼¸¸öÊı)
-		 spop key Ëæ»ú³öÕ»
-		 smove key1 key2 ÔÚkey1ÀïÄ³¸öÖµ      ×÷ÓÃÊÇ½«key1ÀïµÄÄ³¸öÖµ¸³¸økey2
+		 scardï¼Œè·å–é›†åˆé‡Œé¢çš„å…ƒç´ ä¸ªæ•°
+		 srem key value åˆ é™¤é›†åˆä¸­å…ƒç´ 
+		 srandmember key æŸä¸ªæ•´æ•°(éšæœºå‡ºå‡ ä¸ªæ•°)
+		 spop key éšæœºå‡ºæ ˆ
+		 smove key1 key2 åœ¨key1é‡ŒæŸä¸ªå€¼      ä½œç”¨æ˜¯å°†key1é‡Œçš„æŸä¸ªå€¼èµ‹ç»™key2
 		
-		¼¯ºÏ
-		²î¼¯£ºsdiff
-		½»¼¯£ºsinter
-		²¢¼¯£ºsunion
+		é›†åˆ
+		å·®é›†ï¼šsdiff
+		äº¤é›†ï¼šsinter
+		å¹¶é›†ï¼šsunion
 	 * @param redis
 	 */
 	public static void getSet(Jedis redis){
 		redis.sadd("s0", new String[]{"redis1","redis2","redis3"});
 		System.out.println("****"+redis.smembers("s0"));
 		
-		// sismember²é¿´¼¯ºÏÖĞÊÇ·ñÓĞ¶ÔÓ¦µÄÊı¾İ
+		// sismemberæŸ¥çœ‹é›†åˆä¸­æ˜¯å¦æœ‰å¯¹åº”çš„æ•°æ®
 		System.out.println("sismember:"+redis.sismember("s0", "redis1"));
 		
-		//scard ²é¿´¼¯ºÏÖĞµÄ¸öÊı
+		//scard æŸ¥çœ‹é›†åˆä¸­çš„ä¸ªæ•°
 		long scard = redis.scard("s0");
 		System.out.println("scard:"+scard );
 		
-		// srem É¾³ı¼¯ºÏÖĞµÄÖÆ¶¨ÔªËØ
+		// srem åˆ é™¤é›†åˆä¸­çš„åˆ¶å®šå…ƒç´ 
 		long sremlx =redis.srem("s0", new String[]{"redis1"});
 		System.out.println("sreml:"+sremlx );
 		
 		// srandmember 
 		System.out.println("srandmember:"+redis.srandmember("s0") );
 		
-		// spop Ëæ»ú³öÕ»
+		// spop éšæœºå‡ºæ ˆ
 		redis.spop("s0");
 		System.out.println(redis.spop("s0")+"  smembers:"+redis.smembers("s0") );
 		
-		// ÖØĞÂÌí¼ÓÊı¾İ
+		// é‡æ–°æ·»åŠ æ•°æ®
 		redis.sadd("s1", new String[]{"redis1","redis2","redis3"});
 		redis.sadd("s2", new String[]{"redis21","redis22","redis23"});
 		
@@ -65,14 +65,14 @@ public class TestSet {
 		
 		redis.sadd("sx", new String[]{"a","b","c","d","e"});
 		redis.sadd("sy", new String[]{"a","b","c","1","2"});
-		// sdiff ²î¼¯
-		System.out.println("²î¼¯£º"+redis.sdiff("sx","sy"));
+		// sdiff å·®é›†
+		System.out.println("å·®é›†ï¼š"+redis.sdiff("sx","sy"));
 		
-		// sinter ½»¼¯
-		System.out.println("½»¼¯£º"+redis.sinter("sx","sy"));
+		// sinter äº¤é›†
+		System.out.println("äº¤é›†ï¼š"+redis.sinter("sx","sy"));
 		
-		// sunion ²¢¼¯
-		System.out.println("²¢¼¯£º"+redis.sunion("sx","sy"));
+		// sunion å¹¶é›†
+		System.out.println("å¹¶é›†ï¼š"+redis.sunion("sx","sy"));
 		
 		
 		
