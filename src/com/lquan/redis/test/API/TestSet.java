@@ -36,7 +36,46 @@ public class TestSet {
 		redis.sadd("s0", new String[]{"redis1","redis2","redis3"});
 		System.out.println("****"+redis.smembers("s0"));
 		
-		//scard 获得样板的
+		// sismember查看集合中是否有对应的数据
+		System.out.println("sismember:"+redis.sismember("s0", "redis1"));
+		
+		//scard 查看集合中的个数
+		long scard = redis.scard("s0");
+		System.out.println("scard:"+scard );
+		
+		// srem 删除集合中的制定元素
+		long sremlx =redis.srem("s0", new String[]{"redis1"});
+		System.out.println("sreml:"+sremlx );
+		
+		// srandmember 
+		System.out.println("srandmember:"+redis.srandmember("s0") );
+		
+		// spop 随机出栈
+		redis.spop("s0");
+		System.out.println(redis.spop("s0")+"  smembers:"+redis.smembers("s0") );
+		
+		// 重新添加数据
+		redis.sadd("s1", new String[]{"redis1","redis2","redis3"});
+		redis.sadd("s2", new String[]{"redis21","redis22","redis23"});
+		
+		// smove
+		redis.smove("s1", "s2", "redis2");
+		System.out.println("smembers:"+redis.smembers("s2"));
+		
+		
+		redis.sadd("sx", new String[]{"a","b","c","d","e"});
+		redis.sadd("sy", new String[]{"a","b","c","1","2"});
+		// sdiff 差集
+		System.out.println("差集："+redis.sdiff("sx","sy"));
+		
+		// sinter 交集
+		System.out.println("交集："+redis.sinter("sx","sy"));
+		
+		// sunion 并集
+		System.out.println("并集："+redis.sunion("sx","sy"));
+		
+		
+		
 	}
 	
 
