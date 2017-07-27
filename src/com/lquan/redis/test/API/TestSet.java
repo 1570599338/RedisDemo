@@ -24,12 +24,12 @@ public class TestSet {
 		 srem key value 删除集合中元素
 		 srandmember key 某个整数(随机出几个数)
 		 spop key 随机出栈
-		 smove key1 key2 在key1里某个值      作用是将key1里的某个值赋给key2
+		 smove key1   在key1里某个值      作用是将key1里的某个值赋给key2
 		
 		集合
 		差集：sdiff
 		交集：sinter
-		并集：sunion
+		并集：sunion5
 	 * @param redis
 	 */
 	public static void getSet(Jedis redis){
