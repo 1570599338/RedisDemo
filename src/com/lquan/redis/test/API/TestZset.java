@@ -30,6 +30,7 @@ public class TestZset {
 	/**
 	 * sortSet测试结果
 	 */
+	@SuppressWarnings("serial")
 	public static void testSortset(Jedis redis){
 		//选择数据库
 		redis.select(6);
@@ -54,7 +55,7 @@ public class TestZset {
 			System.out.print("  "+t.getScore()+"--"+t.getElement());
 		}
 		System.out.println();
-		Long ss = redis.zrem("zk2", "v3");
+		redis.zrem("zk2", "v3");
 		
 		Set<Tuple> zksx = redis.zrangeWithScores("zk2", 0, -1);
 		System.out.print("删除后数据");
@@ -99,7 +100,7 @@ public class TestZset {
 		
 		
 	}
-
+  
 	/*
 		 zadd/zrange
 		 zrangebyscore key 开始score 结束score

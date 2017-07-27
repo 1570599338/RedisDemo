@@ -69,7 +69,7 @@ public class TestList {
 		System.out.println(redis.lrange("list1", 0, -1)+"****"+llenstr);
 		//  llen
 		
-		Long aa = redis.lrem("list1", 1, "list1.1。1");//指定删除多个value
+		redis.lrem("list1", 1, "list1.1。1");//指定删除多个value
 		
 		//redis.lpush("ltrimlist", new String[]{"x"});
 		//redis.lpush("list1", new String[]{"list1.1。1","list1.2.2","list1.3.3","list1.4.4",} );

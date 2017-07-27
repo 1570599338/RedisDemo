@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import redis.clients.jedis.Jedis;
-import sun.management.resources.agent;
 
 /**
  * 获取Hash类型数据的实测
@@ -37,6 +36,7 @@ public class TestHash {
 		 hincrby/hincrbyfloat
 		 hsetnx
 	 **/
+	@SuppressWarnings("serial")
 	public static void testHashFun(Jedis redis) {
 		// 切换数据库
 		redis.select(4);
